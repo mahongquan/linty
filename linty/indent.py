@@ -125,7 +125,10 @@ class IndentSyntaxNodeHandler(object):
         end = ci.SourceLocation.from_position(tu, end_file, end_line, end_column)
         extent = ci.SourceRange.from_locations(start, end)
         # End of fixing extent.
-        self._token_set = ci.tokenize(tu, extent)
+        r=[]
+        for  t in self.node.get_tokens():
+            r.append(t)
+        self._token_set =r# tu.get_tokens()#ci.tokenize(tu, extent)
         return self._token_set
 
     # ------------------------------------------------------------------------
@@ -756,7 +759,7 @@ class DoStmtHandler(CurlyBraceBlockHandler):
 
         # Get tokens of do/while keywords first.
         stmt_tokens = self._getTokenSet()
-        stmt_tokens.annotate()
+        #ma stmt_tokens.annotate()
         ##print [(x.spelling, x.kind) for x in stmt_tokens]
         ##import pdb;  pdb.set_trace()
         assert stmt_tokens[0].spelling == 'do', 'First token must be do token.'
@@ -766,9 +769,11 @@ class DoStmtHandler(CurlyBraceBlockHandler):
         ##print >>sys.stderr, '    data\t', self.node.data[0], '\t', self.node.data[1], '\t', self.node.data[2], '\txdata\t', self.node.xdata
         for i, t in enumerate(stmt_tokens):
             ##print >>sys.stderr, 'i==%d' % i, '\t', t.spelling, '\t', t.location, '\t', stmt_tokens.get_cursor(i).kind, '\t', stmt_tokens.get_cursor(i).spelling, '\t', stmt_tokens.get_cursor(i).location, '\t', stmt_tokens.get_cursor(i) == self.node
-            c = stmt_tokens.get_cursor(i)
+            c = stmt_tokens[i].cursor#.get_cursor(i)
+            #print dir(c)
+            #raw_input()
             ##print >>sys.stderr, '    data\t', c.data[0], '\t', c.data[1], '\t', c.data[2], '\txdata\t', c.xdata
-            if t.spelling == 'while' and stmt_tokens.get_cursor(i) == self.node:
+            if t.spelling == 'while' and stmt_tokens[i].cursor == self.node:
                 while_token = t
                 break
         assert while_token is not None, 'Must find while token.'
@@ -782,6 +787,9 @@ class DoStmtHandler(CurlyBraceBlockHandler):
             # compound statement.
             compound_tokens = self._getTokenSetForNode(children[0])
             lbrace = compound_tokens[0]
+            print lbrace.spelling
+            print lbrace
+            raw_input("lbrace")#ma error here
             assert lbrace.spelling == '{'
             ##for x in compound_tokens:
             ##    print x.spelling
@@ -864,7 +872,10 @@ class DoStmtHandler(CurlyBraceBlockHandler):
         end = ci.SourceLocation.from_position(tu, end_file, end_line, end_column)
         extent = ci.SourceRange.from_locations(start, end)
         # End of fixing extent.
-        return ci.tokenize(tu, extent)
+        tmp=[]
+        for i in self.node.get_tokens(): #ci.tokenize(tu, extent)
+            tmp.append(i)
+        return tmp
 
     def additionalIndentLevels(self):
         i1 = int(self.config.brace_positions_blocks == 'next-line-indent')

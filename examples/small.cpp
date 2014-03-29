@@ -34,52 +34,55 @@
 
 #include "test.h"
 
-namespace foo  {
-}  // namespace bar
+namespace foo {
+}  // namespace foo
 
 
 namespace foo {
-}  // namespace barXX
+}  // namespace foo
 
 
 namespace foo {
-} // namespace bar
+}  // namespace foo
+
 
 
 namespace foo {
-}
+}  // namespace foo
 
-
-namespace  foo
-{
-  }  // namespace bar
-
-namespace
-foo {
-  }  // namespace bar
+namespace foo {
+}  // namespace foo
 
 class MyClass
 {
-public:
-    int foo;
-    int bar;
+    public:
+        int foo;
+        int bar;
 
-    MyClass() : foo(0), bar(0) {}
+        MyClass() : foo(0), bar(0)
+        {
 
-    MyClass(int i) : foo(i), bar(0)
-    {}
+        }
 
-    MyClass(int i, int j) :
-        foo(i), bar(j)
+        MyClass(int i) : foo(i), bar(0)
+        {
 
-    ~MyClass() {}
+        }
+
+        MyClass(int i, int j) :
+            foo(i), bar(j)
+
+        ~MyClass()
+        {
+
+        }
 };
 
 int bar()
 {
-   int x;
+    int x;
     int y;
-     int z;
+    int z;
 }
 
 int main(int argc, char const ** argv)

@@ -223,6 +223,7 @@ class Checker(object):
         args = ['-I%s' % s for s in self.options.include_dirs]
         # TODO(holtgrew): Make C++11 support configurable.
         args += ['--std=c++11']
+        print filename,args
         translation_unit = index.parse(filename, args=args)
         logging.info('Translation unit: %s', translation_unit.spelling)
 

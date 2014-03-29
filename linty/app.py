@@ -8,7 +8,6 @@ __author__ = 'Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>'
 import logging
 import optparse
 import sys
-
 import main as lm
 
 def createDefaultConfig():
@@ -48,6 +47,7 @@ def main(ast_checks, file_checks):
     checker = lm.Checker(options, ast_checks, file_checks)
     checker.listeners.append(audit_listener)
     # Run the checker.
+    print options.filenames
     res = checker.process(options.filenames)
     return res
 

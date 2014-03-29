@@ -26,9 +26,10 @@ class WhitespaceNodeHandler(lv.LogViolationsMixin):
     def _getTokenSet(self):
         if self._token_set:
             return self._token_set
-        extent = self.node.extent
-        translation_unit = self.node.translation_unit
-        self._token_set = ci.tokenize(translation_unit, extent)
+        r=[]
+        for t in self.node.get_tokens():
+            r.append(t)
+        self._token_set = r
         return self._token_set
         
     def checkWhitespace(self):

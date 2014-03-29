@@ -4,7 +4,8 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-
+from clang.cindex import *
+Config.set_library_path("/Users/mahongquan/llvm3.4/llvm_build/lib")
 import linty.app as la
 import linty.checks as lc
 import linty.indent as li
